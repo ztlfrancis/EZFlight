@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.82.0">
+  <title>Headers · Bootstrap v5.0</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/headers/">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css" >
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/sidebar.css" rel="stylesheet">
+
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="bootstrap" viewBox="0 0 118 94">
+    <title>Bootstrap</title>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
+  </symbol>
+  <symbol id="home" viewBox="0 0 16 16">
+    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+  </symbol>
+  <symbol id="speedometer2" viewBox="0 0 16 16">
+    <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+    <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+  </symbol>
+  <symbol id="table" viewBox="0 0 16 16">
+    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+  </symbol>
+  <symbol id="people-circle" viewBox="0 0 16 16">
+    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+  </symbol>
+  <symbol id="grid" viewBox="0 0 16 16">
+    <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+  </symbol>
+</svg>
+
+
+<header class="p-3 mb-3 border-bottom shadow-sm">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="https://www.quantunicorn.com/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <img src="https://www.quantunicorn.com/static/img/logo.png"  height="40">
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-dark">每日推荐文章</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">特约嘉宾</a></li>
+        <li><a href="#" class="nav-link px-2 link-secondary">资金流查询</a></li>
+        <li><a href="https://www.quantunicorn.com/contact" class="nav-link px-2 link-dark">加入我们</a></li>
+        <li><a href="https://quantunicorn.zendesk.com/hc/zh-cn/sections/360012030092-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98" class="nav-link px-2 link-dark">常见问题</a></li>
+      </ul>
+
+
+
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="#">设置</a></li>
+          <li><a class="dropdown-item" href="#">我的订阅</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">退出登录</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</header>
+<div class="container-fluid">
+  <div class="container collapsed d-md-block " data-bs-toggle="collapse" data-bs-target="#sidebar-Menu" aria-expanded="true" onclick="myFunction(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
+  <div class="row ">
+    <nav class=" bg-white d-md-block col-12 col-md-3 col-xl-2 bd-sidebar collapse" id="sidebar-Menu" >
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+          产品
+        </button>
+        <div class="collapse show" id="home-collapse">
+
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">资金流</a></li>
+            <li><a href="#" class="link-dark rounded">多标的资金流</a></li>
+            <li><a href="#" class="link-dark rounded">QU 100</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+          更多
+        </button>
+        <div class="collapse" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="https://quantunicorn.zendesk.com/hc/zh-cn/requests/new" class="link-dark rounded">提交请求</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="border-top my-3"></li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+          使用须知
+        </button>
+        <div class="collapse" id="account-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="https://quantunicorn.medium.com/blog-1-capital-flow-index%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D-f40e54d93514" class="link-dark rounded">使用须知</a></li>
+            <li><a href="https://www.quantunicorn.com/legal" class="link-dark rounded">使用条款</a></li>
+            <li><a href="https://quantunicorn.medium.com/%E8%B5%84%E9%87%91%E6%B5%81%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F%E6%A1%88%E4%BE%8B%E6%95%99%E5%AD%A6%E6%A8%A1%E5%BC%8F%E4%B8%80-6da736957b29" class="link-dark rounded">使用案例</a></li>
+
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+    <div  class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content d-flex flex-column justify-content-center">
+      <div class="bg-white" >
+        <form>
+      <div class="row ">
+        <div class="col-lg-5 col-md-3 mr-3">
+          <input type="text" class="form-control" id="stockcode" placeholder="股票代号" required>
+          <div class="invalid-feedback">
+            Please enter stockcode.
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-3 mr-3">
+          <input type="text" class="form-control" id="date" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+          <div class="invalid-feedback">
+            Please select a date.
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-1 mr-3">
+          <button class="btn btn-sm btn-primary" type="submit" >查询</button>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="col-lg-2 col-md-1 form-check pl-3">
+          <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+          <label class="form-check-label" for="credit">日内</label>
+        </div>
+        <div class="col-lg-2 col-md-1 form-check">
+          <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+          <label class="form-check-label" for="debit">日线</label>
+        </div>
+        <div class="col-lg-2 col-md-1 form-check">
+          <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+          <label class="form-check-label" for="paypal">周线</label>
+        </div>
+      </div>
+    </form>
+      </div>
+      <div id="main" style="width: 600px;height:400px;"></div>
+
+      <p class="h3">历史数据回测</p>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">日期</th>
+          <th scope="col">指标</th>
+          <th scope="col">排名</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">2021-04-07</th>
+          <td>+</td>
+          <td>5/1747</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-06</th>
+          <td>+</td>
+          <td>10/1848</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-05</th>
+          <td>+</td>
+          <td>1/1948</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-01</th>
+          <td>+</td>
+          <td>15/1899</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-03-31</th>
+          <td>+</td>
+          <td>2/1855</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title">资金流指标</h5>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">指数</th>
+                  <th scope="col">风向</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>SPY</td>
+                  <td>+</td>
+                </tr>
+                <tr>
+                  <td>QQQ</td>
+                  <td>N</td>
+                </tr>
+                <tr>
+                  <td>IWM</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>DIA</td>
+                  <td>N</td>
+                </tr>
+                </tbody>
+              </table>
+              </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title">个股前十</h5>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">股票代码</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>AMZN</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>FB</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>PENN</td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>MU</td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>MSFT</td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>FXI</td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>BIDU</td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>NFLX</td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>NIO</td>
+                </tr>
+                <tr>
+                  <th scope="row">10</th>
+                  <td>KO</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">个股倒十</h5>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">股票代码</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>AMZN</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>FB</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>PENN</td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>MU</td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>MSFT</td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>FXI</td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>BIDU</td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>NFLX</td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>NIO</td>
+                </tr>
+                <tr>
+                  <th scope="row">10</th>
+                  <td>KO</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<footer class="footer mt-auto py-3 bg-light">
+  <section class="contact-section ">
+    <div class="container ">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class=" col-md-4">
+          <ul class=" list-unstyled flex-column">
+            <li><p class="text-black font-weight-bold">About Us</p></li>
+
+            <li><p class="text-black">微信公众号：Quant独角兽</p></li>
+            <li><p class="text-black">微博： Quant独角兽</p></li>
+            <li><p class="text-black">小红书： Quant独角兽</p></li>
+            <li><a class="text-black text-muted p-1" href="https://medium.com/@quantunicorn">Medium博客： Quant Unicorn</a></li>
+            <li><a class="text-black text-muted p-1" href="https://discord.gg/r9MfAyPmxn">Discord</a></li>
+            <li><a class="text-black text-muted p-1" href="https://discord.gg/r9MfAyPmxn">加入我们</a></li>
+          </ul>
+        </div>
+        <div class=" col-md-4">
+          <ul class="list-unstyled flex-column">
+            <li><p class="text-black font-weight-bold">Help</p></li>
+            <li><a class="text-black text-muted p-1" href="https://quantunicorn.zendesk.com/hc/zh-cn/sections/360012030092-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">常见问题</a></li>
+            <li><a class="text-black text-muted p-1" href="https://quantunicorn.zendesk.com/hc/zh-cn">用户指南</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <img class="card-img-top" src="https://www.quantunicorn.com/static/img/wechat.jpeg" alt="Card image cap">
+          <p class="card-text text-black ">关注微信公众号</p>
+        </div>
+        <div class=" col-md-2">
+          <img class="card-img-top" src="https://www.quantunicorn.com/static/img/xhs.jpeg" alt="Card image cap">
+          <p class="card-text text-black ">关注小红书</p>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!--<i class="fas fa-map-marked-alt text-primary mb-2"></i>-->
+    <!--<i class="fas fa-envelope text-primary mb-2"></i>-->
+    <!--<i class="fas fa-mobile-alt text-primary mb-2"></i>-->
+</footer>
+<script type="text/javascript">
+  var chartDom = document.getElementById('main');
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  var xAxisData = [];
+
+  var data2 = [];
+  var data4 = [];
+
+  for (var i = 0; i < 10; i++) {
+    xAxisData.push(9 + i);
+    data2.push((Math.random() * 5).toFixed(2));
+    data4.push(-Math.random().toFixed(2));
+  }
+
+  var emphasisStyle = {
+    itemStyle: {
+      shadowBlur: 10,
+      shadowColor: 'rgba(0,0,0,0.3)'
+    }
+  };
+
+  option = {
+    legend: {
+      data: ['bar2', 'bar4'],
+      left: '10%'
+    },
+    brush: {
+      toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+      xAxisIndex: 0
+    },
+    toolbox: {
+      feature: {
+        magicType: {
+          type: ['stack', 'tiled']
+        },
+        dataView: {}
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: xAxisData,
+      name: 'X Axis',
+      axisLine: {onZero: true},
+      splitLine: {show: false},
+      splitArea: {show: false}
+    },
+    yAxis: {},
+    grid: {
+      bottom: 100
+    },
+    series: [
+
+      {
+        name: '综合',
+        type: 'bar',
+        stack: 'one',
+        emphasis: emphasisStyle,
+        data: data2
+      },
+      {
+        name: '短期',
+        type: 'bar',
+        stack: 'two',
+        emphasis: emphasisStyle,
+        data: data4
+      }
+    ]
+  };
+
+  myChart.on('brushSelected', renderBrushed);
+
+  function renderBrushed(params) {
+    var brushed = [];
+    var brushComponent = params.batch[0];
+
+    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+      var rawIndices = brushComponent.selected[sIdx].dataIndex;
+      brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+    }
+
+    myChart.setOption({
+      title: {
+        backgroundColor: '#333',
+        text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+        bottom: 0,
+        right:'10%',
+        width: 100,
+        textStyle: {
+          fontSize: 12,
+          color: '#fff'
+        }
+      }
+    });
+  }
+
+  option && myChart.setOption(option);
+  $( document ).ready(function() {
+    $('#datepicker').datepicker();
+  });
+  function myFunction(x) {
+    x.classList.toggle("change");
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+
+
+</body>
+</html>

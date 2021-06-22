@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+{% block head %}
+    {{ super() }}
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+<link href="/static/css/styles.css" rel="stylesheet" />
+{% endblock %}
+{% block content %}
+    <section class="about-section text-center" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-white mb-4">使用Quant独角兽</h2>
+                <p class="text-white-50">
+                    资金流指数（Capital Flow Index）是我们潜心打造的一款追踪市场主力资金布局的量化产品。我们综合了市场上所有的期权订单，股票交易暗盘订单，block trade 订单，采用大数据的处理方式，搭建了一套量化的评分系统，以此把握主力资金的布局方向，使得投资者可以在传统的对个股的基本面分析，技术分析基础之上，增加一个有效的参考维度。
+                </p>
+            </div>
+        </div>
+        <img class="img-fluid" src="assets/img/barchart.jpg" alt="" />
+    </div>
+</section>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+
+{% endblock %}

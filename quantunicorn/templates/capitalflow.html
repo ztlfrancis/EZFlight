@@ -1,0 +1,183 @@
+{% extends "dataflow.html" %}
+{% block formAndR %}
+    <div  class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content d-flex flex-column justify-content-center">
+      <div class="bg-white" >
+        <form>
+      <div class="row ">
+        <div class="col-lg-5 col-md-3 mr-3">
+          <input type="text" class="form-control" id="stockcode" placeholder="股票代号" required>
+          <div class="invalid-feedback">
+            Please enter stockcode.
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-3 mr-3">
+          <input type="text" class="form-control" id="date" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+          <div class="invalid-feedback">
+            Please select a date.
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-1 mr-3">
+          <button class="btn btn-sm btn-primary" type="submit" >查询</button>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="col-lg-2 col-md-1 form-check pl-3">
+          <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+          <label class="form-check-label" for="credit">日内</label>
+        </div>
+        <div class="col-lg-2 col-md-1 form-check">
+          <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+          <label class="form-check-label" for="debit">日线</label>
+        </div>
+        <div class="col-lg-2 col-md-1 form-check">
+          <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+          <label class="form-check-label" for="paypal">周线</label>
+        </div>
+      </div>
+    </form>
+      </div>
+      <div id="main" style="width: 600px;height:400px;"></div>
+
+      <p class="h3">历史数据回测</p>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">日期</th>
+          <th scope="col">指标</th>
+          <th scope="col">排名</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">2021-04-07</th>
+          <td>+</td>
+          <td>5/1747</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-06</th>
+          <td>+</td>
+          <td>10/1848</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-05</th>
+          <td>+</td>
+          <td>1/1948</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-01</th>
+          <td>+</td>
+          <td>15/1899</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-03-31</th>
+          <td>+</td>
+          <td>2/1855</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <script type="text/javascript">
+  var chartDom = document.getElementById('main');
+  var myChart = echarts.init(chartDom);
+  var option;
+
+  var xAxisData = [];
+
+  var data2 = [];
+  var data4 = [];
+
+  for (var i = 0; i < 10; i++) {
+    xAxisData.push(9 + i);
+    data2.push((Math.random() * 5).toFixed(2));
+    data4.push(-Math.random().toFixed(2));
+  }
+
+  var emphasisStyle = {
+    itemStyle: {
+      shadowBlur: 10,
+      shadowColor: 'rgba(0,0,0,0.3)'
+    }
+  };
+
+  option = {
+    legend: {
+      data: ['bar2', 'bar4'],
+      left: '10%'
+    },
+    brush: {
+      toolbox: ['rect', 'polygon', 'lineX', 'lineY', 'keep', 'clear'],
+      xAxisIndex: 0
+    },
+    toolbox: {
+      feature: {
+        magicType: {
+          type: ['stack', 'tiled']
+        },
+        dataView: {}
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: xAxisData,
+      name: 'X Axis',
+      axisLine: {onZero: true},
+      splitLine: {show: false},
+      splitArea: {show: false}
+    },
+    yAxis: {},
+    grid: {
+      bottom: 100
+    },
+    series: [
+
+      {
+        name: '综合',
+        type: 'bar',
+        stack: 'one',
+        emphasis: emphasisStyle,
+        data: data2
+      },
+      {
+        name: '短期',
+        type: 'bar',
+        stack: 'two',
+        emphasis: emphasisStyle,
+        data: data4
+      }
+    ]
+  };
+
+  myChart.on('brushSelected', renderBrushed);
+
+  function renderBrushed(params) {
+    var brushed = [];
+    var brushComponent = params.batch[0];
+
+    for (var sIdx = 0; sIdx < brushComponent.selected.length; sIdx++) {
+      var rawIndices = brushComponent.selected[sIdx].dataIndex;
+      brushed.push('[Series ' + sIdx + '] ' + rawIndices.join(', '));
+    }
+
+    myChart.setOption({
+      title: {
+        backgroundColor: '#333',
+        text: 'SELECTED DATA INDICES: \n' + brushed.join('\n'),
+        bottom: 0,
+        right:'10%',
+        width: 100,
+        textStyle: {
+          fontSize: 12,
+          color: '#fff'
+        }
+      }
+    });
+  }
+
+  option && myChart.setOption(option);
+  $( document ).ready(function() {
+    $('#datepicker').datepicker();
+  });
+
+</script>
+{% endblock %}

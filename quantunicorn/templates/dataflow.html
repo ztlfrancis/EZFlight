@@ -1,0 +1,376 @@
+{% extends "home.html" %}
+{% block head %}
+    {{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<style>
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: #04AA6D;
+}
+</style>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css" >
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+  <div class="container collapsed d-md-none " data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="true" onclick="myFunction(this)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
+  <div class="row ">
+    <nav class=" bg-white d-md-block col-12 col-md-2 col-xl-2 collapse" id="sidebarMenu" >
+        {% block sidebarMenu %}
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+          产品
+        </button>
+        <div class="collapse show" id="home-collapse">
+
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="/" class="link-dark rounded">资金流</a></li>
+            <li><a href="#" class="link-dark rounded">多标的资金流</a></li>
+            <li><a href="/qu100" class="link-dark rounded">QU 100</a></li>
+            <li><a href="/indicator" class="link-dark rounded">资金流指标</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+          更多
+        </button>
+        <div class="collapse" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="https://quantunicorn.zendesk.com/hc/zh-cn/requests/new" class="link-dark rounded">提交请求</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="border-top my-3"></li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+          使用须知
+        </button>
+        <div class="collapse" id="account-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="https://quantunicorn.medium.com/blog-1-capital-flow-index%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D-f40e54d93514" class="link-dark rounded">使用须知</a></li>
+            <li><a href="/useterm" class="link-dark rounded">使用条款</a></li>
+            <li><a href="https://quantunicorn.medium.com/%E8%B5%84%E9%87%91%E6%B5%81%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F%E6%A1%88%E4%BE%8B%E6%95%99%E5%AD%A6%E6%A8%A1%E5%BC%8F%E4%B8%80-6da736957b29" class="link-dark rounded">使用案例</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+        {% endblock %}
+  </nav>
+    <div  class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content d-flex flex-column justify-content-center">
+      <div class="bg-white" >
+        <form>
+      <div class="row ">
+        <div class="col-lg-5 col-md-3 mr-3">
+          <input type="text" class="form-control" id="stockcode" placeholder="股票代号" required>
+          <div class="invalid-feedback">
+            Please enter stockcode.
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-3 mr-3">
+          <input type="text" class="form-control" id="date" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+          <div class="invalid-feedback">
+            Please select a date.
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-1 mr-3">
+          <button class="btn btn-sm btn-primary" type="submit" id="search-but" >查询</button>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="col-lg-2 col-md-1 form-check pl-3">
+          <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+          <label class="form-check-label" for="credit">日内</label>
+        </div>
+        <div class="col-lg-2 col-md-1 form-check">
+          <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+          <label class="form-check-label" for="debit">日线</label>
+        </div>
+        <div class="col-lg-2 col-md-1 form-check">
+          <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+          <label class="form-check-label" for="paypal">周线</label>
+        </div>
+      </div>
+    </form>
+      </div>
+      <div id="main" style="width: 100%;min-height:400px;display:none;" ></div>
+
+      <p class="h3">历史数据回测</p>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">日期</th>
+          <th scope="col">指标</th>
+          <th scope="col">排名</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">2021-04-07</th>
+          <td>+</td>
+          <td>5/1747</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-06</th>
+          <td>+</td>
+          <td>10/1848</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-05</th>
+          <td>+</td>
+          <td>1/1948</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-04-01</th>
+          <td>+</td>
+          <td>15/1899</td>
+        </tr>
+        <tr>
+          <th scope="row">2021-03-31</th>
+          <td>+</td>
+          <td>2/1855</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+
+
+<div id="myProgress" class="">
+  <div id="myBar"></div>
+</div>
+
+<br>
+<button onclick="move()">Click Me</button>
+</div>
+</div>
+    <script type="text/javascript">
+    var i = 0;
+function move() {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}
+  var chartDom = document.getElementById('main');
+
+  var option;
+  var xlabel ;
+  var yTotal ;
+  var yNear ;
+  var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+  ];
+  var app = {};
+  app.configParameters = {
+    rotate: {
+        min: -90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+        }
+    },
+    position: {
+        options: posList.reduce(function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+  app.config = {
+    rotate: 90,
+    align: 'left',
+    verticalAlign: 'middle',
+    position: 'insideBottom',
+    distance: 15,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+
+
+
+  $( document ).ready(function() {
+    $('#datepicker').datepicker();
+  });
+  function myFunction(x) {
+    x.classList.toggle("change");
+  }
+
+   $("#search-but").on('click', function (event) {
+        $.ajax({
+
+             //url: 'https://test.quantunicorn.com/api/v2/top100?date='+$("#date").val()+'&top=true&frequency=daily',
+             url:'/test',
+             type: "GET",
+             dataType: "json",
+             success: function (response) {
+                 xlabel = []
+                 yTotal = []
+                 yNear = []
+                 jQuery.each(response["data"], function (i, val) {
+
+
+                     xlabel.push(val['xlabel']);
+
+                     yTotal.push(val['total']);
+                     yNear.push(val['near']);
+
+                 })
+                var myChart = echarts.init(chartDom);
+                option = {
+    title: {
+        text: 'CapitalFlow-AAPL-hourly'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        },
+        formatter: function (params) {
+            return 'Time:  ' +params[0].name ;
+        }
+    },
+    legend: {
+        left: 'right',
+        top: 'top',
+        data: ['Total', 'Near term']
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            mark: {show: true},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: xlabel
+        }
+    ],
+    yAxis: [
+        {
+            show:false,
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: 'Total',
+            type: 'bar',
+            barGap: 0,
+            emphasis: {
+                focus: 'series'
+            },
+            data: yTotal,
+
+        },
+        {
+            name: 'Near term',
+            type: 'bar',
+
+            emphasis: {
+                focus: 'series'
+            },
+            data: yNear,
+            color: 'orange'
+        }
+
+    ]
+};
+                option && myChart.setOption(option);
+                 $("#main").show("fast");
+                 clearInterval(window.counterBack);
+             },
+             error: function (error) {
+                 console.log('error')
+                 clearInterval(window.counterBack);
+                 clearTimeout(timeout);
+                 $("#progressbar").css("width", "100%");
+                 $("#progressbar").addClass("bg-danger");
+                 $("#top100").text("Server error " + error.status);
+             },
+             timeout: 50000
+         });
+
+   })
+
+</script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+
+{% endblock %}

@@ -1,0 +1,244 @@
+{% extends "home.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css" >
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+      <div class="container collapsed d-md-none mb-3 " data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="true" onclick="myFunction(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <div class="row ">
+        <nav class=" bg-white d-md-block col-12 col-md-3 col-xl-2 bd-sidebar collapse" id="sidebarMenu" >
+            {% block sidebarMenu %}
+        <ul class="list-unstyled ps-0">
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+              产品
+            </button>
+            <div class="collapse show" id="home-collapse">
+
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="/" class="link-dark rounded">资金流</a></li>
+                <li><a href="#" class="link-dark rounded">多标的资金流</a></li>
+                <li><a href="/qu100" class="link-dark rounded">QU 100</a></li>
+                <li><a href="/indicator" class="link-dark rounded">资金流指标</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+              更多
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="https://quantunicorn.zendesk.com/hc/zh-cn/requests/new" class="link-dark rounded">提交请求</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="border-top my-3"></li>
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+              使用须知
+            </button>
+            <div class="collapse" id="account-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="https://quantunicorn.medium.com/blog-1-capital-flow-index%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D-f40e54d93514" class="link-dark rounded">使用须知</a></li>
+                <li><a href="https://www.quantunicorn.com/legal" class="link-dark rounded">使用条款</a></li>
+                <li><a href="https://quantunicorn.medium.com/%E8%B5%84%E9%87%91%E6%B5%81%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F%E6%A1%88%E4%BE%8B%E6%95%99%E5%AD%A6%E6%A8%A1%E5%BC%8F%E4%B8%80-6da736957b29" class="link-dark rounded">使用案例</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+            {% endblock %}
+      </nav>
+        <div  class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content d-flex flex-column justify-content-center">
+          <div class="bg-white" >
+            <form>
+              <div class="row row-cols-2">
+                <div class="col-lg-6 col-md-3 mr-3">
+                  <input type="text" class="form-control" id="date" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+                  <div class="invalid-feedback">
+                    Please select a date.
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-4 ">
+                  <button class="btn btn-md col-lg-3 col-md-2 btn-primary " type="submit" >查询</button>
+                </div>
+              </div>
+        </form>
+          </div>
+
+          <p class="h3">资金流指标</p>
+           <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title">资金流指标</h5>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">指数</th>
+                  <th scope="col">风向</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>SPY</td>
+                  <td>+</td>
+                </tr>
+                <tr>
+                  <td>QQQ</td>
+                  <td>N</td>
+                </tr>
+                <tr>
+                  <td>IWM</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>DIA</td>
+                  <td>N</td>
+                </tr>
+                </tbody>
+              </table>
+              </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+
+            <div class="card-body">
+              <h5 class="card-title">个股前十</h5>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">股票代码</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>AMZN</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>FB</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>PENN</td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>MU</td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>MSFT</td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>FXI</td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>BIDU</td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>NFLX</td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>NIO</td>
+                </tr>
+                <tr>
+                  <th scope="row">10</th>
+                  <td>KO</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">个股倒十</h5>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">股票代码</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>AMZN</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>FB</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>PENN</td>
+                </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>MU</td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>MSFT</td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td>FXI</td>
+                </tr>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>BIDU</td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>NFLX</td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>NIO</td>
+                </tr>
+                <tr>
+                  <th scope="row">10</th>
+                  <td>KO</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  $( document ).ready(function() {
+    $('#datepicker').datepicker();
+  });
+  function myFunction(x) {
+    x.classList.toggle("change");
+  }
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.en-GB.min.js" charset="UTF-8"></script>
+
+{% endblock %}
