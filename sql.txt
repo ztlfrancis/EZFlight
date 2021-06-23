@@ -1,11 +1,11 @@
-Create table ticket(id int, account_id int, total_price int, departure_location varchar(255), arrival_location varchar(255), travel_date date, end_date date, transaction_date date);
+create database ticket;
 
-insert into table ticket values (1, 1, 300, 'Pittsburgh' , 'New York',  '2021-06-18', '2021-06-20', '2021-06-17');
+use ticket;
+
+Create table ticket(id int, account_id int, total_price int, departure_location varchar(255), arrival_location varchar(255), travel_date date, end_date date, transaction_date date);
 
 insert into ticket values (1, 1, 300, 'Pittsburgh' , 'New York',  '2021-06-18', '2021-06-20', '2021-06-17');
 
 insert into ticket values (2, 1, 500, 'New York' , 'DC',  '2021-06-18', '2021-06-20', '2021-06-17');
 
 insert into ticket values (3, 2, 500, 'New York' , 'DC',  '2021-06-18', '2021-06-20', '2021-06-17');
-
-Update ticket set id = 2 where total_price = 500;
