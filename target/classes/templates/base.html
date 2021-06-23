@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" class="h-100">
-<head id="head">
+<head >
+    <div th:fragment="head" th:remove="tag">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -17,7 +18,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    </div>
 </head>
 <body class="d-flex flex-column h-100">
 
@@ -29,7 +31,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/home" class="nav-link px-2 link-dark">My Tickets</a></li>
+                <li><a href="/showticket" class="nav-link px-2 link-dark">My Tickets</a></li>
                 <li><a href="/" class="nav-link px-2 link-dark">Register</a></li>
                 <li><a href="/" class="nav-link px-2 link-dark">Customer  Service</a></li>
             </ul>
