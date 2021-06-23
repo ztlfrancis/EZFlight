@@ -1,18 +1,22 @@
 package com.tianlin.booking.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.CreatedDate;
+//import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Ticket {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
     private Integer accountId;
+
+    private Integer passengerId;
 
     private Integer totalPrice;
 
@@ -24,7 +28,13 @@ public class Ticket {
 
     private Date endDate;
 
-    private Date transactionDate;
+    @Column(nullable = false, insertable=false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Column(nullable = false, insertable=false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
 
     public Integer getId() {
         return id;
@@ -34,6 +44,13 @@ public class Ticket {
         this.id = id;
     }
 
+    public Integer getPassengerId() {
+        return passengerId;
+    }
+
+    public void setPassengerId(Integer passengerId) {
+        this.passengerId = passengerId;
+    }
     public Integer getAccountId() {
         return accountId;
     }
@@ -81,15 +98,5 @@ public class Ticket {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-    public Date getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
-
 
 }
