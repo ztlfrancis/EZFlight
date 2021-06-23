@@ -1,4 +1,4 @@
-package com.tianlin.booking.controller.Repository;
+package com.tianlin.booking.repository;
 
 import com.tianlin.booking.Entity.Ticket;
 import org.springframework.data.jpa.repository.Query;
