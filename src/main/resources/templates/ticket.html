@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" data-ng-app="demoApp">
+<head >
+  <div th:replace="base :: head"></div>
+  <link href="/css/ticket.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column h-100">
+<header th:insert="base :: header" ></header>
+<!-- Begin page content -->
+<div class="container " data-ng-controller="SimpleController">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col-10 col-xl-4 col-lg-6 col-md-10 col-sm-10  col-xs-10" data-ng-repeat="ticket in tickets">
+    <div class="card g-4" >
+      <div class="card-body">
+        <h5 class="card-title">Anthony Zhao</h5>
+        <p class="card-text">{{ticket.departureLocation}} To {{ticket.arrivalLocation}}</p>
+        <p class="card-text">Departure Date: {{ticket.travelDate}}</p>
+        <p class="card-text">Return Date: {{ticket.endDate}}</p>
+        <p class="card-text">Price: ${{ticket.totalPrice}}</p>
+        <a href="#" class="btn btn-danger">Cancel</a>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+</main>
+<script>
+  var demoApp = angular.module("demoApp", []);
+
+  demoApp.controller("SimpleController", function ($scope,$http) {
+    $http({
+      url: '/api/gettickets',
+      method: "GET",
+      params: {account_id: 1}
+    }).then(function (response){
+      $scope.tickets = response.data
+    });
+  });
+</script>
+
+<footer id="footer" class="footer  mt-auto py-3 bg-dark ">
+
+  <section class="contact-section ">
+    <div class="container ">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class=" col-md-4">
+          <ul class=" list-unstyled flex-column">
+            <li><p class="text-light font-weight-bold">About Us</p></li>
+            <li><a class="text-light " href="/">facebook</a></li>
+            <li><a class="text-light " href="/">IG</a></li>
+          </ul>
+        </div>
+        <div class=" col-md-4">
+          <ul class="list-unstyled flex-column">
+            <li><p class="text-light font-weight-bold">Help</p></li>
+            <li><a class="text-light" href="/">Often Asked Questions</a></li>
+            <li><a class="text-light" href="/">User Guide</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!--<i class="fas fa-map-marked-alt text-primary mb-2"></i>-->
+  <!--<i class="fas fa-envelope text-primary mb-2"></i>-->
+  <!--<i class="fas fa-mobile-alt text-primary mb-2"></i>-->
+
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
+
+</body>
+</html>
