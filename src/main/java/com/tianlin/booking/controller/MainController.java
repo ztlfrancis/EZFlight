@@ -32,4 +32,9 @@ public class MainController {
         return new ModelAndView("ticket");
     }
 
+    @GetMapping(value = "/billing")
+    public ModelAndView allBillingPage(){
+        return new ModelAndView("billing");
+    }
+
 }

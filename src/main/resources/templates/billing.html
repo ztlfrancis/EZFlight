@@ -6,21 +6,27 @@
 </head>
 <body class="d-flex flex-column h-100">
 <header th:insert="base :: header" ></header>
+
+
 <!-- Begin page content -->
 <div class="container " data-ng-controller="SimpleController">
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-  <div class="col-10 col-xl-4 col-lg-6 col-md-10 col-sm-10  col-xs-10" data-ng-repeat="ticket in tickets">
-    <div class="card g-4" >
-      <div class="card-body">
-        <h5 class="card-title">Anthony Zhao</h5>
-        <p class="card-text">{{ticket.departureLocation}} To {{ticket.arrivalLocation}}</p>
-        <p class="card-text">Departure Date: {{ticket.travelDate}}</p>
-        <p class="card-text">Return Date: {{ticket.endDate}}</p>
-        <p class="card-text">Price: ${{ticket.totalPrice}}</p>
-        <a href="#" class="btn btn-danger">Cancel</a>
-      </div>
-    </div>
-  </div>
+  <div class="row d-flex justify-content-center">
+  <table class="table">
+    <thead>
+    <tr>
+
+      <th scope="col">Amount</th>
+      <th scope="col">Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="ticket in tickets">
+      <td>${{ticket.totalPrice}}</td>
+      <td>{{ticket.transactionDate}}</td>
+
+    </tr>
+    </tbody>
+  </table>
   </div>
 </div>
 </main>
