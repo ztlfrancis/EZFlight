@@ -1,6 +1,8 @@
+/Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/Entity/Passenger.java
 /Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/BookingApplication.java
 /Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/controller/APIController.java
 /Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/repository/TicketRepository.java
+/Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/repository/PassengerRepository.java
 /Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/controller/MainController.java
 /Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/Entity/Ticket.java
 /Users/zhaotianlin/Documents/LearnGit/EZFlight/src/main/java/com/tianlin/booking/exceptions/ResourceNotFoundException.java
