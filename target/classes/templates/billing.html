@@ -22,7 +22,7 @@
     <tbody>
     <tr data-ng-repeat="ticket in tickets">
       <td>${{ticket.totalPrice}}</td>
-      <td>{{ticket.transactionDate}}</td>
+      <td>{{ticket.createdAt}}</td>
 
     </tr>
     </tbody>
@@ -35,9 +35,8 @@
 
   demoApp.controller("SimpleController", function ($scope,$http) {
     $http({
-      url: '/api/gettickets',
-      method: "GET",
-      params: {account_id: 1}
+      url: '/api/v1/accounts/2/tickets',
+      method: "GET"
     }).then(function (response){
       $scope.tickets = response.data
     });

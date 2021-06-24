@@ -29,9 +29,8 @@
 
   demoApp.controller("SimpleController", function ($scope,$http) {
     $http({
-      url: '/api/gettickets',
+      url: '/api/v1/accounts/2/tickets',
       method: "GET",
-      params: {account_id: 1}
     }).then(function (response){
       $scope.tickets = response.data
     });

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac88eaba-5354-4331-84a5-f23b089945c3" name="Default Changelist" comment="">
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Repository/TicketRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Repository/TicketRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/booking-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/booking-0.0.1-SNAPSHOT.jar" afterDir="false" />
@@ -12,6 +13,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/tianlin/booking/controller/APIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tianlin/booking/controller/APIController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.tianlin.booking.BookingApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.tianlin.booking.BookingApplicationTests.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.tianlin.booking.BookingApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.tianlin.booking.BookingApplicationTests.txt" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,10 +23,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -127,7 +129,7 @@
       <workItem from="1624460082843" duration="7771000" />
       <workItem from="1624485250928" duration="393000" />
       <workItem from="1624546050967" duration="461000" />
-      <workItem from="1624554658136" duration="3983000" />
+      <workItem from="1624554658136" duration="6278000" />
     </task>
     <servers />
   </component>
