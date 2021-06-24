@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac88eaba-5354-4331-84a5-f23b089945c3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Entity/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/entity/Passenger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Entity/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/entity/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Repository/TicketRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Repository/TicketRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Repository/PassengerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/repository/PassengerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/Repository/TicketRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/repository/TicketRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/controller/APIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tianlin/booking/controller/APIController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
