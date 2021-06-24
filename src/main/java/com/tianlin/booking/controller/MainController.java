@@ -27,7 +27,7 @@ public class MainController {
         return new ModelAndView("addPass");
     }
 
-<<<<<<< HEAD
+
     @GetMapping(value = "/showticket")
     public ModelAndView allTicketPage(){
         return new ModelAndView("ticket");
@@ -38,6 +38,5 @@ public class MainController {
         return new ModelAndView("billing");
     }
 
-=======
->>>>>>> 45f4bb5143c79c67369bca8d12e8282d866f1b9d
+
 }
