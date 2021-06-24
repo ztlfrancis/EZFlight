@@ -1,11 +1,11 @@
 package com.tianlin.booking.controller;
 
 
-import com.tianlin.booking.Entity.Passenger;
-import com.tianlin.booking.Entity.Ticket;
+import com.tianlin.booking.entity.Passenger;
+import com.tianlin.booking.entity.Ticket;
 
-import com.tianlin.booking.repository.PassengerRepository;
-import com.tianlin.booking.repository.TicketRepository;
+import com.tianlin.booking.Repository.PassengerRepository;
+import com.tianlin.booking.Repository.TicketRepository;
 import com.tianlin.booking.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

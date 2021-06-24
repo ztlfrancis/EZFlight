@@ -1,4 +1,4 @@
-package com.tianlin.booking.Entity;
+package com.tianlin.booking.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

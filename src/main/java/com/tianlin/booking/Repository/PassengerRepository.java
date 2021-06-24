@@ -1,6 +1,6 @@
-package com.tianlin.booking.repository;
+package com.tianlin.booking.Repository;
 
-import com.tianlin.booking.Entity.Passenger;
+import com.tianlin.booking.entity.Passenger;
 
 import org.springframework.data.repository.CrudRepository;
 
