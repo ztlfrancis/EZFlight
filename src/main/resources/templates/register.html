@@ -31,7 +31,7 @@
       <div th:if="${message}">
         <h2 th:text="${message}"></h2>
       </div>
-      <form class="form-signin" action="/signup" method="post">
+      <form class="form-signin"  onsubmit="return false" action="##" id="formsu">
 
         <div class="p-3">
         <input type="text" id="inputUsername" name=username class="form-control " placeholder="Username" required autofocus ng-model="username" ng-change="checkUsername()">
@@ -48,7 +48,7 @@
 
 
         <div class="p-3">
-        <input type="email" id="inputEmail" name=email class="form-control " placeholder="Email address" required autofocus ng-model="emAdd" ng-change="checkEmail()">
+        <input type="address" id="inputAddress" name=address class="form-control " placeholder="Address" required autofocus ng-model="emAdd" ng-change="checkEmail()">
         <div class="alert alert-danger" role="alert" ng-if="emailInvalid"
              style="width: 100%;">
           <strong>Invalid: </strong> Email exists.
@@ -69,7 +69,7 @@
         </div>
         </div>
         <div class="p-3">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="usernameInvalid || emailInvalid || psInconsistent" >Sign up</button>
+        <button onclick="signup()" class="btn btn-lg btn-primary btn-block" type="button" ng-disabled="usernameInvalid || emailInvalid || psInconsistent" >Sign up</button>
         </div>
       </form>
     </div>
@@ -121,7 +121,37 @@
 
   });
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>
+function signup() {
+var formData = $("#formsu").serializeArray();
+  var data = {};
+  for (var i = 0; i < formData.length; i++) {
+    data[formData[i].name] = formData[i].value;
+  }
+  console.log(data);
+  var json01 = {'username':data.username,'password':data.password,'address':data.address};
+  $.ajax({
+    type: "post",
+    dataType: "text",
+    url: "account/signup",
+    contentType: 'application/json',
+    data: JSON.stringify(json01),
+    success: function (result) {
+      if (result == "success") {
+        alert(result)
+        window.location.href = "/login";
+      } else {
+        alert(result);
+      }
+    },
+    error: function (data) {
+      console.log("error");
+    }
+  });
+}
+</script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
