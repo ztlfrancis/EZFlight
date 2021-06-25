@@ -29,9 +29,9 @@
           <div th:if="${message}">
             <h2 th:text="${message}"></h2>
           </div>
-          <form class="form-signin" action="/login" method="post">
+          <form class="form-signin" action="/account/login" method="get">
           <div class="p-3">
-            <input type="email" id="inputEmail" name=email class="form-control " placeholder="Email address" required autofocus>
+            <input type="useranme" id="inputUsername" name=username class="form-control " placeholder="Useranme" required autofocus>
           </div>
             <div class="p-3">
             <input type="password" id="inputPassword" name=password class="form-control" placeholder="Password" required>
@@ -47,5 +47,8 @@
     </div>
   </div>
 </div>
+<script>
+</script>
+
 </body>
 </html>
