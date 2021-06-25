@@ -7,10 +7,11 @@ import com.tianlin.booking.repository.AccountRepository;
 import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -51,9 +52,10 @@ public class AccountController {
         return accountRepository.findAll();
     }
 
-    @RequestMapping("signup")
+    @PostMapping("signup")
     @ResponseBody
     public String signup(@RequestBody Account acc) {
+
         Optional<Account> byUsername = accountRepository.findByUsernameAndExist(acc.getUsername(),true);
         if(byUsername.isPresent()&&byUsername.get().isExist())
         return "username exist";
@@ -64,15 +66,19 @@ public class AccountController {
         return "success";
     }
 
-    @RequestMapping("login")
+    @PostMapping(value = "login")
     @ResponseBody
-    public String login(@RequestBody Account acc){
+    public String login(@RequestBody Account acc,HttpServletResponse hsr){
+        System.out.println(acc);
+        System.out.println("login");
         Optional<Account> byUsername = accountRepository.findByUsernameAndExist(acc.getUsername(),true);
         if(!byUsername.isPresent()||!byUsername.get().isExist())return "wrong username";
         if(!byUsername.get().getPassword().equals(acc.getPassword()))return "worng password";
+        Cookie cookie = new Cookie("username",acc.getUsername());
+        cookie.setPath("/");
+        hsr.addCookie(cookie);
         return "success";
     }
-
     @RequestMapping("delete")
     @ResponseBody
     public String delete(@RequestBody Account acc){
@@ -84,4 +90,8 @@ public class AccountController {
         return "success";
     }
 
+    @RequestMapping("test")
+    public String test(){
+        return "test";
+    }
 }
