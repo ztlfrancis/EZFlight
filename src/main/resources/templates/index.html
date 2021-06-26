@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org" data-ng-app="indexApp">
 <head th:insert="base :: head">
 </head>
 <body class="d-flex flex-column h-100">
@@ -7,42 +7,58 @@
 <header th:insert="base :: header" ></header>
 
 <!-- Begin page content -->
-<div class="container h-100">
+<div class="container h-100" data-ng-controller="SimpleController">
     <div class="row align-items-center h-100">
         <div class="col-6 mx-auto">
         <div class="card h-100  justify-content-center text-center"  >
 
-            <h4 class="card-title" th:unless="${message}">Book A Flight Right Now</h4>
-            <div th:if="${message}">
-                <h2 th:text="${message}"></h2>
+                <h4 class="card-title pt-3" th:unless="${message}">Book A Flight Right Now</h4>
+                <div th:if="${message}">
+                    <h2 th:text="${message}"></h2>
+                </div>
+                <form class="row g-3 p-3">
+                    <div class="col-md-6 ">
+                        <label for="DepartureDate" class="form-label">DepartureDate</label>
+                        <input id="DepartureDate" type="text" class="form-control" placeholder="Departure Date" aria-label="DepartureDate" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+
+                    </div>
+                    <div class="col-md-6 ">
+                        <label for="ReturnDate" class="form-label">ReturnDate</label>
+                        <input id="ReturnDate" type="text" class="form-control" placeholder="ReturnDate" aria-label="ReturnDate" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+
+                    </div>
+                    <div class="col-12 ">
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+
+                    <div class="col-12 ">
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="col-md-6 ">
+                        <input type="text" class="form-control" id="inputCity" placeholder="City">
+                    </div>
+                    <div class="col-md-4 ">
+                        <input type="text" class="form-control" id="inputState" placeholder="State">
+                    </div>
+                    <div class="col-md-2 ">
+                        <input type="text" class="form-control" id="inputZip" placeholder="Zip">
+                    </div>
+                    <div class="row mb-3 g-3">
+                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Passanger</label>
+                        <div class="col-sm-9">
+                            <div id="passengerTable"></div>
+                            <select class="form-select " id="colFormLabelSm" multiple placeholder="col-form-label-lg">
+
+                                <option  data-ng-repeat="passenger in passengers" value={{passenger.id}} id={{passenger.id}}>{{passenger.lastName}} {{passenger.firstName}} {{passenger.email}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 ">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
             </div>
-            <form class="form-signin p-3" action="/booking" method="post">
-                <div class="row g-3">
-                    <div class="col ">
-                        <input id="LeaveDate" type="text" class="form-control" placeholder="Leave Date" aria-label="Leave Date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
-                    </div>
-                    <div class="col ">
-                        <input id="ReturnDate" type="text" class="form-control" placeholder="Return Date" aria-label="Return Date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
-                    </div>
-                </div>
-                <div class="row mb-3 g-3">
-                    <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Passanger</label>
-                    <div class="col-sm-9">
-                        <select class="form-select " id="colFormLabelSm" placeholder="col-form-label-lg">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div>
 
-
-                <button class="btn btn-lg btn-primary btn-block " type="submit">Confirm</button>
-
-            </form>
-        </div>
     </div>
     </div>
 </div>
@@ -51,6 +67,16 @@
     $( document ).ready(function() {
         $('#datepicker').datepicker();
 
+    });
+    var indexApp = angular.module("indexApp", []);
+
+    indexApp.controller("SimpleController", function ($scope,$http) {
+        $http({
+            url: '/api/v1/accounts/1/passenger',
+            method: "GET",
+        }).then(function (response){
+            $scope.passengers = response.data
+        });
     });
 </script>
 <footer class="footer  mt-auto py-3 bg-dark ">

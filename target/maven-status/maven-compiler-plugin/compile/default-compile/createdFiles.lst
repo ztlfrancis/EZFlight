@@ -1,8 +1,0 @@
-com/tianlin/booking/Entity/Ticket.class
-com/tianlin/booking/Entity/Passenger.class
-com/tianlin/booking/BookingApplication.class
-com/tianlin/booking/exceptions/ResourceNotFoundException.class
-com/tianlin/booking/repository/PassengerRepository.class
-com/tianlin/booking/controller/APIController.class
-com/tianlin/booking/controller/MainController.class
-com/tianlin/booking/repository/TicketRepository.class

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,6 +22,8 @@ public class Passenger {
     private String LastName;
 
     private String email;
+
+
 
 
     @Column(nullable = false, insertable=false, updatable = false)
