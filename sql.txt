@@ -15,5 +15,3 @@ insert into ticket values (3, 2,'DC','2021-06-17','New York','2021-06-20', 1,500
 insert into ticket values (3, 2, 500, 'New York' , 'DC',  '2021-06-18', '2021-06-20', '2021-06-17');
 
 insert into passenger values (1,'Anthony', 1,'2021-06-18', 'tianlin@gmail.com', 'Zhao', '2021-06-20');
-
-insert into passenger values (2,'Lee', 1,'2021-06-18', 'Alice@gmail.com', 'Alice', '2021-06-20');

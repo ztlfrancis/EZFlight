@@ -46,11 +46,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }
-        HttpSession session = request.getSession();
+     /*   HttpSession session = request.getSession();
         Object obj = session.getAttribute("username");
         if (null == obj) {
             session.setAttribute("username", username);
-        }
+            session.setMaxInactiveInterval(900);
+            System.out.println("addsession");
+        }*/
         System.out.println("letgo");
         return true;
     }

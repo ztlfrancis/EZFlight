@@ -71,6 +71,26 @@
   <!--<i class="fas fa-mobile-alt text-primary mb-2"></i>-->
 
 </footer>
+<script>
+  function logout() {
+    $.ajax({
+      url:"account/logout",
+      dataType: "text",
+      success: function (result) {
+        if (result == "logout!!!") {
+          alert(result);
+          window.location.href = "/login";
+        } else {
+          alert(result);
+
+        }
+      },
+      error: function (data) {
+        console.log("error");
+      }
+    })
+  }
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.13/js/dataTables.bootstrap4.min.js"></script>
 
 </body>

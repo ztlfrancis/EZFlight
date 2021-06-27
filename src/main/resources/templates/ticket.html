@@ -29,12 +29,33 @@
 
   demoApp.controller("SimpleController", function ($scope,$http) {
     $http({
-      url: '/api/v1/accounts/2/tickets',
+      url: '/api/v1/accounts/tickets',
       method: "GET",
     }).then(function (response){
       $scope.tickets = response.data
+
     });
   });
+</script>
+<script>
+  function logout() {
+    $.ajax({
+      url:"account/logout",
+      dataType: "text",
+      success: function (result) {
+        if (result == "logout!!!") {
+          alert(result);
+          window.location.href = "/login";
+        } else {
+          alert(result);
+
+        }
+      },
+      error: function (data) {
+        console.log("error");
+      }
+    })
+  }
 </script>
 
 <footer id="footer" class="footer  mt-auto py-3 bg-dark ">

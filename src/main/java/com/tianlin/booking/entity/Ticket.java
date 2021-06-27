@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 
 
 @Data
@@ -30,16 +30,13 @@ public class Ticket {
 
     private Date endDate;
 
-
-
     @Column(nullable = false, insertable=false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Column(nullable = false, insertable=false)
+    @Column(nullable = false, insertable=false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-
 
 
 }

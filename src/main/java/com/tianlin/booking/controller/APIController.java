@@ -1,20 +1,26 @@
 package com.tianlin.booking.controller;
 
 
+import com.tianlin.booking.entity.Account;
 import com.tianlin.booking.entity.Passenger;
 import com.tianlin.booking.entity.Ticket;
 
+import com.tianlin.booking.repository.AccountRepository;
 import com.tianlin.booking.repository.PassengerRepository;
 import com.tianlin.booking.repository.TicketRepository;
 import com.tianlin.booking.exceptions.ResourceNotFoundException;
+import com.tianlin.booking.service.AccountService;
 import com.tianlin.booking.service.PassengerService;
 import com.tianlin.booking.service.PassengerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -31,10 +37,23 @@ public class APIController {
     @Autowired
     private PassengerServiceImpl passengerService;
 
-    @GetMapping(path="/accounts/{id}/tickets")
+    @Autowired
+    private  AccountRepository accountRepository;
+
+    @GetMapping(path="/accounts/tickets")
     @ResponseBody
-    public List<Ticket> getTicket(@PathVariable(value = "id") Integer accountId) {
-        return ticketRepository.findAllByAccountId(accountId);
+    public List<Ticket> getTicket(HttpServletRequest request) {
+        System.out.println("getticket");
+        Cookie[] cookies = request.getCookies();
+        String username = "";
+        for(Cookie c:cookies){
+            username = c.getValue();
+        }
+        System.out.println(username);
+        Optional<Account> user = accountRepository.findByUsernameAndExist(username, true);
+        Integer id = user.get().getId();
+        System.out.println(id);
+        return ticketRepository.findAllByAccountId(id);
     }
 
     @PostMapping(path="/accounts/{id}/tickets")
@@ -68,6 +87,7 @@ public class APIController {
     public List<Passenger> getPassenger(@PathVariable(value = "id") Integer accountId) {
         return passengerRepository.findAllByAccountId(accountId);
     }
+
     @PostMapping(path="/accounts/{id}/passenger")
     @ResponseBody
     public Passenger createPassenger(@RequestBody Map<String,String> params, @PathVariable(value = "id") Integer accountId) {
@@ -96,6 +116,7 @@ public class APIController {
         return ResponseEntity.ok().build();
 
     }
+
 
 
 }
