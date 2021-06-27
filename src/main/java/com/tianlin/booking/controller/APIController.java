@@ -7,11 +7,14 @@ import com.tianlin.booking.entity.Ticket;
 import com.tianlin.booking.repository.PassengerRepository;
 import com.tianlin.booking.repository.TicketRepository;
 import com.tianlin.booking.exceptions.ResourceNotFoundException;
+import com.tianlin.booking.service.PassengerService;
+import com.tianlin.booking.service.PassengerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -24,6 +27,9 @@ public class APIController {
 
     @Autowired
     private PassengerRepository passengerRepository;
+
+    @Autowired
+    private PassengerServiceImpl passengerService;
 
     @GetMapping(path="/accounts/{id}/tickets")
     @ResponseBody
@@ -63,10 +69,14 @@ public class APIController {
         return passengerRepository.findAllByAccountId(accountId);
     }
     @PostMapping(path="/accounts/{id}/passenger")
-    public @ResponseBody
-    Passenger createPassenger(@RequestBody Passenger passenger, @PathVariable(value = "id") Integer accountId) {
-        passenger.setAccountId(accountId);
-        return passengerRepository.save(passenger);
+    @ResponseBody
+    public Passenger createPassenger(@RequestBody Map<String,String> params, @PathVariable(value = "id") Integer accountId) {
+        System.out.println("firstName: "+params.get("firstName")+" lastName: "+params.get("lastName")+" email: "+params.get("email"));
+        return passengerService.CreatePassenger(
+                params.get("firstName"),
+                params.get("lastName"),
+                params.get("email"),
+                accountId);
     }
 
     @PutMapping(path="/accounts/{id}/passenger/{passengerId}")

@@ -44,12 +44,16 @@
                         <input type="text" class="form-control" id="inputZip" placeholder="Zip">
                     </div>
                     <div class="row mb-3 g-3">
-                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Passanger</label>
-                        <div class="col-sm-9">
+                        <div class ="col-4">
+                        <label for="colFormLabelSm" class=" col-form-label col-form-label-sm">Passanger</label>
+                            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Add More
+                            </button>
+                        </div>
+                        <div class="col-sm-8">
                             <div id="passengerTable"></div>
                             <select class="form-select " id="colFormLabelSm" multiple placeholder="col-form-label-lg">
-
-                                <option  data-ng-repeat="passenger in passengers" value={{passenger.id}} id={{passenger.id}}>{{passenger.lastName}} {{passenger.firstName}} {{passenger.email}}</option>
+                                <option  data-ng-repeat="passenger in passengers" value={{passenger.id}} id={{passenger.id}}>{{passenger.firstName}} {{passenger.lastName}}: {{passenger.email}}</option>
                             </select>
                         </div>
                     </div>
@@ -61,7 +65,39 @@
 
     </div>
     </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add a new passenger</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 p-3">
+                        <div class="col-md-6 ">
+                            <label for="FirstName" class="form-label">FirstName</label>
+                            <input type="text" class="form-control" ng-model="firstname" id="firstname" required>
+                        </div>
+                        <div class="col-md-6 ">
+                            <label for="LastName" class="form-label">LastName</label>
+                            <input type="text" class="form-control" ng-model="lastname" id="lastname" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="Contact" class="form-label">Contact</label>
+                            <input type="text" class="form-control" ng-model="passemail" id="Contact" required>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="createPass()" data-bs-dismiss="modal">Create Passenger</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 </main>
 <script type="text/javascript">
     $( document ).ready(function() {
@@ -71,12 +107,34 @@
     var indexApp = angular.module("indexApp", []);
 
     indexApp.controller("SimpleController", function ($scope,$http) {
+        $scope.firstname = "";
+        $scope.lastname = "";
+        $scope.passemail = "";
         $http({
             url: '/api/v1/accounts/1/passenger',
             method: "GET",
         }).then(function (response){
             $scope.passengers = response.data
         });
+        $scope.createPass = function() {
+            $http({
+                url: '/api/v1/accounts/1/passenger',
+                method: "POST",
+                data:{firstName:$scope.firstname,lastName:$scope.lastname,email:$scope.passemail},
+
+        }).then(function (response){
+                $http({
+                    url: '/api/v1/accounts/1/passenger',
+                    method: "GET",
+                }).then(function (response){
+                    $scope.passengers = response.data
+                });
+            },function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
+
+        };
     });
 </script>
 <footer class="footer  mt-auto py-3 bg-dark ">
