@@ -47,15 +47,12 @@ public class APIController {
     public List<TicketDTO> getTicket(HttpServletRequest request) {
         System.out.println("getticket");
         Cookie[] cookies = request.getCookies();
-        String username = "";
+        String id = "";
         for(Cookie c:cookies){
-            username = c.getValue();
+            if(c.getName().equals("id"))
+            id = c.getValue();
         }
-        System.out.println(username);
-        Optional<Account> user = accountRepository.findByUsernameAndExist(username, true);
-        Integer id = user.get().getId();
-        System.out.println(id);
-        List<Ticket> tickets = ticketRepository.findAllByAccountId(id);
+        List<Ticket> tickets = ticketRepository.findAllByAccountId(Integer.parseInt(id));
         List<TicketDTO> ticketDTOS = new ArrayList<>(tickets.size());
         for(Ticket t:tickets){
             TicketDTO ticketDTO = new TicketDTO();
