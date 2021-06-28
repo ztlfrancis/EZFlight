@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Component
 public class Passenger {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
