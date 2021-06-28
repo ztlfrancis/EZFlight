@@ -63,6 +63,9 @@ public class AccountServiceImpl implements  AccountService {
         Optional<Account> byUsername = accountRepository.findByUsernameAndExist(acc.getUsername(),true);
         if(!byUsername.isPresent()||!byUsername.get().isExist())return "wrong username";
         if(!byUsername.get().getPassword().equals(acc.getPassword()))return "worng password";
+        Cookie cookie1 = new Cookie("id",byUsername.get().getId()+"");
+        cookie1.setPath("/");
+        hsr.addCookie(cookie1);
         Cookie cookie = new Cookie("username",acc.getUsername());
         cookie.setPath("/");
         hsr.addCookie(cookie);
