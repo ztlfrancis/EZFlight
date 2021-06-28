@@ -40,7 +40,7 @@ public class APIController {
     private PassengerServiceImpl passengerService;
 
     @Autowired
-    private  AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @GetMapping(path="/accounts/tickets")
     @ResponseBody
@@ -74,8 +74,8 @@ public class APIController {
     }
 
     @PostMapping(path="/accounts/{id}/tickets")
-    public @ResponseBody
-    Ticket createTicket(@RequestBody Ticket ticket, @PathVariable(value = "id") Integer accountId) {
+    @ResponseBody
+    public Ticket createTicket(@RequestBody Ticket ticket, @PathVariable(value = "id") Integer accountId) {
         ticket.setAccountId(accountId);
         return ticketRepository.save(ticket);
     }
@@ -133,7 +133,4 @@ public class APIController {
         return ResponseEntity.ok().build();
 
     }
-
-
-
 }
