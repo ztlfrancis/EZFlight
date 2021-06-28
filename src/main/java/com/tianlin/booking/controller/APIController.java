@@ -5,6 +5,7 @@ import com.tianlin.booking.entity.Account;
 import com.tianlin.booking.entity.Passenger;
 import com.tianlin.booking.entity.Ticket;
 
+import com.tianlin.booking.entity.TicketDTO;
 import com.tianlin.booking.repository.AccountRepository;
 import com.tianlin.booking.repository.PassengerRepository;
 import com.tianlin.booking.repository.TicketRepository;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,7 +44,7 @@ public class APIController {
 
     @GetMapping(path="/accounts/tickets")
     @ResponseBody
-    public List<Ticket> getTicket(HttpServletRequest request) {
+    public List<TicketDTO> getTicket(HttpServletRequest request) {
         System.out.println("getticket");
         Cookie[] cookies = request.getCookies();
         String username = "";
@@ -53,7 +55,22 @@ public class APIController {
         Optional<Account> user = accountRepository.findByUsernameAndExist(username, true);
         Integer id = user.get().getId();
         System.out.println(id);
-        return ticketRepository.findAllByAccountId(id);
+        List<Ticket> tickets = ticketRepository.findAllByAccountId(id);
+        List<TicketDTO> ticketDTOS = new ArrayList<>(tickets.size());
+        for(Ticket t:tickets){
+            TicketDTO ticketDTO = new TicketDTO();
+            ticketDTO.setArrivalLocation(t.getArrivalLocation());
+            ticketDTO.setDepartureLocation(t.getArrivalLocation());
+            ticketDTO.setTravelDate(t.getTravelDate());
+            ticketDTO.setEndDate(t.getEndDate());
+            ticketDTO.setTotalPrice(t.getTotalPrice());
+            Optional<Passenger> pid = passengerRepository.findById(t.getPassengerId());
+            Passenger passenger = pid.get();
+            ticketDTO.setPass_firstname(passenger.getFirstName());
+            ticketDTO.setPass_lastname(passenger.getLastName());
+            ticketDTOS.add(ticketDTO);
+        }
+        return ticketDTOS;
     }
 
     @PostMapping(path="/accounts/{id}/tickets")
