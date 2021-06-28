@@ -2,6 +2,7 @@ package com.tianlin.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Component
 public class Passenger {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
