@@ -8,10 +8,6 @@ import com.tianlin.booking.exceptions.ResourceNotFoundException;
 import com.tianlin.booking.repository.AccountRepository;
 import com.tianlin.booking.repository.PassengerRepository;
 import com.tianlin.booking.repository.TicketRepository;
-import com.tianlin.booking.exceptions.ResourceNotFoundException;
-import com.tianlin.booking.service.AccountService;
-import com.tianlin.booking.service.PassengerService;
-import com.tianlin.booking.service.PassengerServiceImpl;
 import com.tianlin.booking.service.PassengerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +37,7 @@ public class APIController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @GetMapping(path="/accounts/{id}/tickets")
+    @GetMapping(path="/accounts/tickets")
     @ResponseBody
     public List<Ticket> getTicket(HttpServletRequest request) {
         System.out.println("getticket");
