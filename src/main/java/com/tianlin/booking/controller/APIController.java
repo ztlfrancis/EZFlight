@@ -3,10 +3,9 @@ package com.tianlin.booking.controller;
 
 import com.tianlin.booking.entity.Passenger;
 import com.tianlin.booking.entity.Ticket;
-
+import com.tianlin.booking.exceptions.ResourceNotFoundException;
 import com.tianlin.booking.repository.PassengerRepository;
 import com.tianlin.booking.repository.TicketRepository;
-import com.tianlin.booking.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +31,8 @@ public class APIController {
     }
 
     @PostMapping(path="/accounts/{id}/tickets")
-    public @ResponseBody
-    Ticket createTicket(@RequestBody Ticket ticket, @PathVariable(value = "id") Integer accountId) {
+    @ResponseBody
+    public Ticket createTicket(@RequestBody Ticket ticket, @PathVariable(value = "id") Integer accountId) {
         ticket.setAccountId(accountId);
         return ticketRepository.save(ticket);
     }
@@ -86,5 +85,4 @@ public class APIController {
         return ResponseEntity.ok().build();
 
     }
-
 }

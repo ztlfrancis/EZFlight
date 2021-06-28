@@ -3,7 +3,13 @@ package com.tianlin.booking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import javax.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 
@@ -30,14 +36,10 @@ public class Ticket {
 
     private Date endDate;
 
-    @Column(nullable = false, insertable=false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date createdAt;
 
-    @Column(nullable = false, insertable=false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date updatedAt;
 
-
 }
-
