@@ -134,21 +134,35 @@ public class APIController {
         System.out.println(passengerId+" "+tripId);
     }
 
-    @GetMapping(path="/accounts/{id}/passenger")
+    @GetMapping(path="/accounts/passenger")
     @ResponseBody
-    public List<Passenger> getPassenger(@PathVariable(value = "id") Integer accountId) {
-        return passengerRepository.findAllByAccountId(accountId);
+    public List<Passenger> getPassenger(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        int i = Integer.parseInt(accountId.getValue());
+        return passengerRepository.findAllByAccountId(i);
     }
 
-    @PostMapping(path="/accounts/{id}/passenger")
+    @PostMapping(path="/accounts/passenger")
     @ResponseBody
-    public Passenger createPassenger(@RequestBody Map<String,String> params, @PathVariable(value = "id") Integer accountId) {
+    public Passenger createPassenger(@RequestBody Map<String,String> params,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        int i = Integer.parseInt(accountId.getValue());
         System.out.println("firstName: "+params.get("firstName")+" lastName: "+params.get("lastName")+" email: "+params.get("email"));
         return passengerService.CreatePassenger(
                 params.get("firstName"),
                 params.get("lastName"),
                 params.get("email"),
-                accountId);
+                i);
     }
 
     @PutMapping(path="/accounts/{id}/passenger/{passengerId}")

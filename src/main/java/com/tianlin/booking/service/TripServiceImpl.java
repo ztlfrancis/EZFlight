@@ -7,6 +7,7 @@ import com.tianlin.booking.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ public class TripServiceImpl implements TripService{
 
     @Autowired
     TripRepository tripRepository;
+    @Autowired
+    TicketRepository ticketRepository;
 
     public Trip CreateTrip(int accountId, String departureLocation, String arrivalLocation, String comment, Date travelDate, Date endDate){
         Trip trip = new Trip();
@@ -35,7 +38,15 @@ public class TripServiceImpl implements TripService{
     }
 
     public List<Trip> GetTripByAccountId(int accountId) {
-        return tripRepository.findAllByAccountIdOrderByTravelDate(accountId);
+        List<Trip> tripByAccount = tripRepository.findAllByAccountIdOrderByTravelDate(accountId);
+        List<Trip> ans  = new ArrayList<>();
+        for(Trip t:tripByAccount){
+            if(ticketRepository.findAllByTripId(t.getId()).size()!=0){
+               ans.add(t);
+            }
+        }
+
+        return ans;
     }
     public void UpdateComment(String comment,Integer tripId) {
 
