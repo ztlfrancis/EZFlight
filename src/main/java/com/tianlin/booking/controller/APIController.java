@@ -77,7 +77,7 @@ public class APIController {
 
     @PostMapping(path="/accounts/trips")
     @ResponseBody
-    public void createTrip(@RequestBody Map<String,String> params ,HttpServletRequest request) {
+    public String createTrip(@RequestBody Map<String,String> params ,HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         Cookie accountId = null;
         for (Cookie cookie : cookies) {
@@ -85,12 +85,12 @@ public class APIController {
                 accountId = cookie;
         }
         if(accountId== null)
-            return;
+            return  "no such account ";
         if(params.get("tripId")!=null){
             int tripId = Integer.parseInt((String) params.get("tripId"));
             if(params.get("passengerId")!=null)
             ticketService.CreateTicket(tripId,Integer.parseInt((String)params.get("passengerId")));
-            return;
+            return  "success";
         }
         String[] passengers1 = params.get("passengerId").split("&");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -109,7 +109,7 @@ public class APIController {
         }catch (Exception e){
 
         }
-
+        return "";
     }
 
     @PutMapping(path="/accounts/{id}/tickets/{ticketId}")
