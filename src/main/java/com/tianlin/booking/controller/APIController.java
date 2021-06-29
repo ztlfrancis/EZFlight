@@ -92,22 +92,20 @@ public class APIController {
             ticketService.CreateTicket(tripId,Integer.parseInt((String)params.get("passengerId")));
             return  "success";
         }
-        String[] passengers1 = params.get("passengerId").split("&");
+        String[] passengers = params.get("passengerId").split("&");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         try{
-            Trip tempTrip = tripService.CreateTrip(
+
+             tripService.createTrip(
                     Integer.parseInt(accountId.getValue()),
                     (String)params.get("FromPlace"),
                     (String)params.get("ToPlace"),
                     "",
                      formatter.parse(params.get("DepartureDate")),
-                    formatter.parse(params.get("ReturnDate")));
-            for(String passengerId:passengers1){
-                System.out.println(passengerId);
-                ticketService.CreateTicket(tempTrip.getId(),Integer.parseInt(passengerId));
-            }
-        }catch (Exception e){
+                    formatter.parse(params.get("ReturnDate")), passengers);
 
+        }catch (Exception e){
+            System.out.println("########################### Exception while creating trip");
         }
         return "";
     }

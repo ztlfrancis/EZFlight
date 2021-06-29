@@ -8,7 +8,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Component
@@ -32,6 +34,9 @@ public class Trip {
     private Date travelDate;
 
     private Date endDate;
+
+    @OneToMany(mappedBy="trip", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<Ticket> tickets = new ArrayList<>();
 
     @CreationTimestamp
     private Date createdAt;

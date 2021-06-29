@@ -21,7 +21,9 @@ public class Ticket {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    private Integer tripId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="trip_id", nullable=false)
+    private Trip trip;
 
     private Integer passengerId;
 

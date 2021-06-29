@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -22,14 +21,25 @@ public class TripServiceImpl implements TripService{
     @Autowired
     TicketRepository ticketRepository;
 
-    public Trip CreateTrip(int accountId, String departureLocation, String arrivalLocation, String comment, Date travelDate, Date endDate){
+    @Autowired
+    private TicketServiceImpl ticketService;
+
+    public Trip createTrip(int accountId, String departureLocation, String arrivalLocation, String comment, Date travelDate, Date endDate, String[] passengers){
         Trip trip = new Trip();
+        List<Ticket> tickets = trip.getTickets();
         trip.setAccountId(accountId);
         trip.setDepartureLocation(departureLocation);
         trip.setArrivalLocation(arrivalLocation);
         trip.setComment(comment);
         trip.setTravelDate(travelDate);
         trip.setEndDate(endDate);
+        trip.setTickets(tickets);
+        for(String passengerId:passengers){
+            System.out.println(passengerId);
+            Ticket ticket = ticketService.CreateTicket(0,Integer.parseInt(passengerId));
+            ticket.setTrip(trip);
+            tickets.add(ticket);
+        }
         return tripRepository.save(trip);
     }
 

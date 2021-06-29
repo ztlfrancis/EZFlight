@@ -1,6 +1,5 @@
 package com.tianlin.booking.service;
 
-import com.tianlin.booking.entity.Passenger;
 import com.tianlin.booking.entity.Ticket;
 
 public interface TicketService {
