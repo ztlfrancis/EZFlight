@@ -77,7 +77,7 @@ public class APIController {
 
     @PostMapping(path="/accounts/trips")
     @ResponseBody
-    public void createTrip(@RequestBody Map<String,String> params ,HttpServletRequest request) {
+    public String createTrip(@RequestBody Map<String,String> params ,HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         Cookie accountId = null;
         for (Cookie cookie : cookies) {
@@ -85,12 +85,12 @@ public class APIController {
                 accountId = cookie;
         }
         if(accountId== null)
-            return;
+            return  "no such account ";
         if(params.get("tripId")!=null){
             int tripId = Integer.parseInt((String) params.get("tripId"));
             if(params.get("passengerId")!=null)
             ticketService.CreateTicket(tripId,Integer.parseInt((String)params.get("passengerId")));
-            return;
+            return  "success";
         }
         String[] passengers1 = params.get("passengerId").split("&");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -109,7 +109,7 @@ public class APIController {
         }catch (Exception e){
 
         }
-
+        return "";
     }
 
     @PutMapping(path="/accounts/{id}/tickets/{ticketId}")
@@ -134,21 +134,35 @@ public class APIController {
         System.out.println(passengerId+" "+tripId);
     }
 
-    @GetMapping(path="/accounts/{id}/passenger")
+    @GetMapping(path="/accounts/passenger")
     @ResponseBody
-    public List<Passenger> getPassenger(@PathVariable(value = "id") Integer accountId) {
-        return passengerRepository.findAllByAccountId(accountId);
+    public List<Passenger> getPassenger(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        int i = Integer.parseInt(accountId.getValue());
+        return passengerRepository.findAllByAccountId(i);
     }
 
-    @PostMapping(path="/accounts/{id}/passenger")
+    @PostMapping(path="/accounts/passenger")
     @ResponseBody
-    public Passenger createPassenger(@RequestBody Map<String,String> params, @PathVariable(value = "id") Integer accountId) {
+    public Passenger createPassenger(@RequestBody Map<String,String> params,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        int i = Integer.parseInt(accountId.getValue());
         System.out.println("firstName: "+params.get("firstName")+" lastName: "+params.get("lastName")+" email: "+params.get("email"));
         return passengerService.CreatePassenger(
                 params.get("firstName"),
                 params.get("lastName"),
                 params.get("email"),
-                accountId);
+                i);
     }
 
     @PutMapping(path="/accounts/{id}/passenger/{passengerId}")

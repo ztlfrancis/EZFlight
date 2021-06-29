@@ -41,8 +41,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                 break;
             }
         }
-        if (StringUtils.isEmpty(username)) {
-            System.out.println("no username");
+        if (StringUtils.isEmpty("id")) {
+            System.out.println("no id");
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }

@@ -95,6 +95,7 @@
     {
         var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         if (match) {
+            console.log(match);
             return match;
         }
         else{
@@ -113,10 +114,10 @@
         $scope.passemail = "";
         $scope.FromPlace = "";
         $scope.ToPlace = "";
-
+        var accountId = check_cookie_name('accountId');
 
         $http({
-            url: '/api/v1/accounts/1/passenger',
+            url: '/api/v1/accounts/passenger',
             method: "GET",
         }).then(function (response){
             $scope.passengers = response.data
@@ -129,6 +130,7 @@
                 method: "POST",
                 data:{FromPlace:$scope.FromPlace,ToPlace:$scope.ToPlace,DepartureDate:$('#DepartureDate').val(),ReturnDate:$('#ReturnDate').val(),passengerId:passengers},
             }).then(function (response){
+                alert("sccuess");
                             console.log($scope.FromPlace+" "+$scope.ToPlace+" "+$scope.DepartureDate+" "+$scope.ReturnDate+" ")
                         },function errorCallback(response) {
                 // called asynchronously if an error occurs
@@ -142,13 +144,15 @@
                 data:{FromPlace:$scope.FromPlace,ToPlace:$scope.ToPlace,DepartureDate:$scope.DepartureDate,ReturnDate:$scope.ReturnDate},
 
         }).then(function (response){
+
                 $http({
-                    url: '/api/v1/accounts/1/passenger',
+                    url: '/api/v1/accounts/passenger',
                     method: "GET",
                 }).then(function (response){
                     $scope.passengers = response.data
                 });
             },function errorCallback(response) {
+
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
             });
@@ -160,13 +164,13 @@
                 return;
             }
             $http({
-                url: '/api/v1/accounts/'+accountId+'/passenger',
+                url: '/api/v1/accounts/passenger',
                 method: "POST",
                 data:{firstName:$scope.firstname,lastName:$scope.lastname,email:$scope.passemail},
 
             }).then(function (response){
                 $http({
-                    url: '/api/v1/accounts/'+accountId+'/passenger',
+                    url: '/api/v1/accounts/passenger',
                     method: "GET",
                 }).then(function (response){
                     $scope.passengers = response.data

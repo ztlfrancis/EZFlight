@@ -14,7 +14,7 @@
     <div class="col-10 col-xl-4 col-lg-6 col-md-10 col-sm-10  col-xs-10" data-ng-repeat="passenger in travelHistory.passengers[$index]">
       <div class="card g-4" >
         <div class="card-body">
-          <h5 class="card-title">{{passenger.firstName}} {{passenger.lastName}}</h5>
+          <h5 class="card-title">{{passenger.firstName}}</h5>
           <p class="card-text">{{trip.departureLocation}} To {{trip.arrivalLocation}}</p>
           <p class="card-text">Departure Date: {{trip.travelDate}}</p>
           <p class="card-text">Return Date: {{trip.endDate}}</p>
@@ -44,6 +44,7 @@
       method: "GET",
     }).then(function (response){
       $scope.travelHistory = response.data
+      $scope.travelHistory.passengers.forEach(e =>console.log(e.forEach(f => console.log(f.firstName))));
     });
     $scope.deleteTicket = function(passengerId,tripId) {
       $http({
