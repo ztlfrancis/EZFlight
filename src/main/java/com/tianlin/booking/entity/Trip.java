@@ -12,20 +12,26 @@ import java.util.Date;
 
 
 @Component
-//tripId,passengerId,price
+//accountId,departureLocation,arrivalLocation,comment,travelDate,endDate
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Ticket {
+public class Trip {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    private Integer tripId;
+    private Integer accountId;
 
-    private Integer passengerId;
+    private String departureLocation;
 
-    private Integer price = 200;
+    private String arrivalLocation;
+
+    private String comment="";
+
+    private Date travelDate;
+
+    private Date endDate;
 
     @CreationTimestamp
     private Date createdAt;

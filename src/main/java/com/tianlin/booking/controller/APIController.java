@@ -1,28 +1,21 @@
 package com.tianlin.booking.controller;
 
 
-import com.tianlin.booking.entity.Account;
-import com.tianlin.booking.entity.Passenger;
-import com.tianlin.booking.entity.Ticket;
+import com.tianlin.booking.entity.*;
 
-import com.tianlin.booking.entity.TicketDTO;
 import com.tianlin.booking.repository.AccountRepository;
 import com.tianlin.booking.repository.PassengerRepository;
 import com.tianlin.booking.repository.TicketRepository;
 import com.tianlin.booking.exceptions.ResourceNotFoundException;
-import com.tianlin.booking.service.AccountService;
-import com.tianlin.booking.service.PassengerService;
-import com.tianlin.booking.service.PassengerServiceImpl;
+import com.tianlin.booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 @RestController
@@ -40,77 +33,136 @@ public class APIController {
     private PassengerServiceImpl passengerService;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private TicketServiceImpl ticketService;
+
+    @Autowired
+    private TripServiceImpl tripService;
+
+    @Autowired
+    private  AccountRepository accountRepository;
 
     @GetMapping(path="/accounts/tickets")
     @ResponseBody
-    public List<TicketDTO> getTicket(HttpServletRequest request) {
-        System.out.println("getticket");
+    public TravelHistroy getTicket(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        String id = "";
-        for(Cookie c:cookies){
-            if(c.getName().equals("id"))
-            id = c.getValue();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
         }
-        List<Ticket> tickets = ticketRepository.findAllByAccountId(Integer.parseInt(id));
-        List<TicketDTO> ticketDTOS = new ArrayList<>(tickets.size());
-        for(Ticket t:tickets){
-            TicketDTO ticketDTO = new TicketDTO();
-            ticketDTO.setArrivalLocation(t.getArrivalLocation());
-            ticketDTO.setDepartureLocation(t.getArrivalLocation());
-            ticketDTO.setTravelDate(t.getTravelDate());
-            ticketDTO.setEndDate(t.getEndDate());
-            ticketDTO.setTotalPrice(t.getTotalPrice());
-            Optional<Passenger> pid = passengerRepository.findById(t.getPassengerId());
-            Passenger passenger = pid.get();
-            ticketDTO.setPass_firstname(passenger.getFirstName());
-            ticketDTO.setPass_lastname(passenger.getLastName());
-            ticketDTOS.add(ticketDTO);
+        if(accountId== null)
+            return new TravelHistroy();
+        TravelHistroy travelHistroy = new TravelHistroy();
+        List<Trip> trips = tripService.GetTripByAccountId(Integer.parseInt(accountId.getValue()));
+        List<Passenger> allpass = passengerService.getPassengerByAccountId(Integer.parseInt(accountId.getValue()));
+        HashMap<Integer,Passenger> passengerHashMap = new HashMap<>();
+        for(Passenger pass:allpass ){
+            passengerHashMap.put(pass.getId(),pass);
         }
-        return ticketDTOS;
+
+        List<List<Passenger>> passlist = new ArrayList<>();
+        travelHistroy.setTrips(trips);
+        for(Trip trip:trips){
+            List<Passenger> passengers =  new ArrayList<>();
+            List<Ticket> tickets = ticketService.GetTicketsByTripId(trip.getId());
+            for(Ticket ticket:tickets){
+                passengers.add(passengerHashMap.get(ticket.getPassengerId()));
+            }
+            passlist.add(passengers);
+        }
+        travelHistroy.setPassengers(passlist);
+
+        return travelHistroy;
     }
 
-    @PostMapping(path="/accounts/{id}/tickets")
+    @PostMapping(path="/accounts/trips")
     @ResponseBody
-    public Ticket createTicket(@RequestBody Ticket ticket, @PathVariable(value = "id") Integer accountId) {
-        ticket.setAccountId(accountId);
-        return ticketRepository.save(ticket);
+    public String createTrip(@RequestBody Map<String,String> params ,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        if(accountId== null)
+            return  "no such account ";
+        if(params.get("tripId")!=null){
+            int tripId = Integer.parseInt((String) params.get("tripId"));
+            if(params.get("passengerId")!=null)
+            ticketService.CreateTicket(tripId,Integer.parseInt((String)params.get("passengerId")));
+            return  "success";
+        }
+        String[] passengers1 = params.get("passengerId").split("&");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try{
+            Trip tempTrip = tripService.CreateTrip(
+                    Integer.parseInt(accountId.getValue()),
+                    (String)params.get("FromPlace"),
+                    (String)params.get("ToPlace"),
+                    "",
+                     formatter.parse(params.get("DepartureDate")),
+                    formatter.parse(params.get("ReturnDate")));
+            for(String passengerId:passengers1){
+                System.out.println(passengerId);
+                ticketService.CreateTicket(tempTrip.getId(),Integer.parseInt(passengerId));
+            }
+        }catch (Exception e){
+
+        }
+        return "";
     }
 
     @PutMapping(path="/accounts/{id}/tickets/{ticketId}")
     @ResponseBody
     public Ticket updateTicket(@RequestBody Ticket ticket, @PathVariable(value = "id") Integer accountId, @PathVariable(value = "ticketId") Integer ticketId) {
-        ticket.setAccountId(accountId);
         ticket.setId(ticketId);
         return ticketRepository.save(ticket);
     }
 
-    @DeleteMapping(path="/accounts/{id}/tickets/{ticketId}")
+    @DeleteMapping(path="/accounts/tickets/{passengerId}/{tripId}")
     @ResponseBody
-    public ResponseEntity<?> deleteTicket(@PathVariable(value = "id") Integer accountId, @PathVariable(value = "ticketId") Integer ticketId) {
-        Ticket existingTicket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new ResourceNotFoundException("Ticket", "id", ticketId));
-
-        ticketRepository.delete(existingTicket);
-        return ResponseEntity.ok().build();
-
+    public void deleteTicket( @PathVariable(value = "passengerId") Integer passengerId,@PathVariable(value = "tripId") Integer tripId,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        if(accountId== null)
+            return;
+        ticketService.DeleteTicketByPassengerIdAndTripId(tripId,passengerId);
+        System.out.println(passengerId+" "+tripId);
     }
 
-    @GetMapping(path="/accounts/{id}/passenger")
+    @GetMapping(path="/accounts/passenger")
     @ResponseBody
-    public List<Passenger> getPassenger(@PathVariable(value = "id") Integer accountId) {
-        return passengerRepository.findAllByAccountId(accountId);
+    public List<Passenger> getPassenger(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        int i = Integer.parseInt(accountId.getValue());
+        return passengerRepository.findAllByAccountId(i);
     }
 
-    @PostMapping(path="/accounts/{id}/passenger")
+    @PostMapping(path="/accounts/passenger")
     @ResponseBody
-    public Passenger createPassenger(@RequestBody Map<String,String> params, @PathVariable(value = "id") Integer accountId) {
+    public Passenger createPassenger(@RequestBody Map<String,String> params,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        int i = Integer.parseInt(accountId.getValue());
         System.out.println("firstName: "+params.get("firstName")+" lastName: "+params.get("lastName")+" email: "+params.get("email"));
         return passengerService.CreatePassenger(
                 params.get("firstName"),
                 params.get("lastName"),
                 params.get("email"),
-                accountId);
+                i);
     }
 
     @PutMapping(path="/accounts/{id}/passenger/{passengerId}")
@@ -128,6 +180,41 @@ public class APIController {
                 .orElseThrow(() -> new ResourceNotFoundException("Passenger", "id", passengerId));
         passengerRepository.delete(existingPassenger);
         return ResponseEntity.ok().build();
-
     }
+    @PostMapping(path="/test")
+    @ResponseBody
+    public void testTrip(@RequestBody Map<String,String> params ,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+
+        System.out.println((String) params.get("FromPlace")+" "+(String) params.get("ToPlace")+" "+accountId.getValue());
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            System.out.println(accountId.getValue() + " " + (String) params.get("FromPlace") + " " + (String) params.get("ToPlace") + " " + formatter.parse((String) params.get("DepartureDate")).toString() + " " + formatter.parse((String) params.get("ReturnDate")).toString()+" "+(String)params.get("passengerId"));
+
+
+        }catch (Exception e){
+
+        }
+    }
+
+    @PutMapping(path="/trip/{tripId}/{comment}")
+    @ResponseBody
+    public void updateComment( @PathVariable(value = "tripId") Integer tripId,@PathVariable(value = "comment") String comment,HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Cookie accountId = null;
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
+        }
+        if(accountId== null)
+            return;
+        System.out.println(tripId+"  "+comment);
+        tripService.UpdateComment(comment,tripId);
+    }
+
 }

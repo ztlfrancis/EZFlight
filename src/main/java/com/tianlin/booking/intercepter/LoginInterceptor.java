@@ -32,17 +32,17 @@ public class LoginInterceptor implements HandlerInterceptor {
             System.out.println("nocookie");
             return false;
         }
-        String username = null;
+        String accountId = null;
 
         for (Cookie item : cookies) {
-            if ("username".equals(item.getName())) {
-                username = item.getValue();
+            if ("accountId".equals(item.getName())) {
+                accountId = item.getValue();
                 System.out.println("matched");
                 break;
             }
         }
-        if (StringUtils.isEmpty(username)) {
-            System.out.println("no username");
+        if (StringUtils.isEmpty("accountId")) {
+            System.out.println("no id");
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }

@@ -15,15 +15,16 @@
     <thead>
     <tr>
 
-      <th scope="col">Amount</th>
-      <th scope="col">Date</th>
+      <th scope="col">Trip</th>
+      <th scope="col">Total</th>
+      <th scope="col">BillDate</th>
     </tr>
     </thead>
     <tbody>
-    <tr data-ng-repeat="ticket in tickets">
-      <td>${{ticket.totalPrice}}</td>
-      <td>{{ticket.createdAt}}</td>
-
+    <tr data-ng-repeat="trip in travelHistory.trips">
+      <td>RT: {{trip.departureLocation}}  {{trip.arrivalLocation}}</td>
+      <td>${{travelHistory.passengers[$index].length * 200}} </td>
+      <td>{{trip.createdAt}}</td>
     </tr>
     </tbody>
   </table>
@@ -35,10 +36,10 @@
 
   demoApp.controller("SimpleController", function ($scope,$http) {
     $http({
-      url: '/api/v1/accounts/2/tickets',
-      method: "GET"
+      url: '/api/v1/accounts/tickets',
+      method: "GET",
     }).then(function (response){
-      $scope.tickets = response.data
+      $scope.travelHistory = response.data
     });
   });
 </script>
