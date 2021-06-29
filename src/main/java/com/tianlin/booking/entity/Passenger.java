@@ -26,7 +26,6 @@ public class Passenger {
 
     private String email;
 
-
     @CreationTimestamp
     private Date createdAt;
 

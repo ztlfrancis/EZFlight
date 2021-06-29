@@ -63,10 +63,7 @@ public class AccountServiceImpl implements  AccountService {
         Optional<Account> byUsername = accountRepository.findByUsernameAndExist(acc.getUsername(),true);
         if(!byUsername.isPresent()||!byUsername.get().isExist())return "wrong username";
         if(!byUsername.get().getPassword().equals(acc.getPassword()))return "worng password";
-        Cookie cookie1 = new Cookie("id",byUsername.get().getId()+"");
-        cookie1.setPath("/");
-        hsr.addCookie(cookie1);
-        Cookie cookie = new Cookie("username",acc.getUsername());
+        Cookie cookie = new Cookie("accountId",String.valueOf(byUsername.get().getId()));
         cookie.setPath("/");
         hsr.addCookie(cookie);
         return "success";
@@ -86,16 +83,17 @@ public class AccountServiceImpl implements  AccountService {
     @Override
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
-        Cookie username= null;
+        Cookie accountId= null;
         for (Cookie cookie : cookies) {
-            if(cookie.getName().equals("username"))
-                username = cookie;
+            if(cookie.getName().equals("accountId"))
+                accountId = cookie;
         }
-        if(username!=null){
-            username.setMaxAge(0);
-            username.setPath("/");
-            response.addCookie(username);
-            request.getSession().setAttribute("username","");
+        if(accountId!=null){
+            accountId.setMaxAge(0);
+            accountId.setPath("/");
+            response.addCookie(accountId);
+            request.getSession().setAttribute("accountId","");
+
             return "logout!!!";
         }else{
             return "already logout";
