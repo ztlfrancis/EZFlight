@@ -19,29 +19,20 @@
                 <form class="row g-3 p-3">
                     <div class="col-md-6 ">
                         <label for="DepartureDate" class="form-label">DepartureDate</label>
-                        <input id="DepartureDate" type="text" class="form-control" placeholder="Departure Date" aria-label="DepartureDate" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+                        <input id="DepartureDate" type="text" class="form-control" placeholder="Departure Date" aria-label="DepartureDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" ng-model="DepartureDate">
 
                     </div>
                     <div class="col-md-6 ">
                         <label for="ReturnDate" class="form-label">ReturnDate</label>
-                        <input id="ReturnDate" type="text" class="form-control" placeholder="ReturnDate" aria-label="ReturnDate" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+                        <input id="ReturnDate" type="text" class="form-control" placeholder="ReturnDate" aria-label="ReturnDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" ng-model="ReturnDate">
 
                     </div>
                     <div class="col-12 ">
-                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        <input type="text" class="form-control" id="FromPlace" placeholder="From"  ng-model="FromPlace">
                     </div>
 
                     <div class="col-12 ">
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                    </div>
-                    <div class="col-md-6 ">
-                        <input type="text" class="form-control" id="inputCity" placeholder="City">
-                    </div>
-                    <div class="col-md-4 ">
-                        <input type="text" class="form-control" id="inputState" placeholder="State">
-                    </div>
-                    <div class="col-md-2 ">
-                        <input type="text" class="form-control" id="inputZip" placeholder="Zip">
+                        <input type="text" class="form-control" id="ToPlace" placeholder="To" ng-model="ToPlace">
                     </div>
                     <div class="row mb-3 g-3">
                         <div class ="col-4">
@@ -52,13 +43,13 @@
                         </div>
                         <div class="col-sm-8">
                             <div id="passengerTable"></div>
-                            <select class="form-select " id="colFormLabelSm" multiple placeholder="col-form-label-lg">
+                            <select class="form-select " id="colFormLabelSm" multiple placeholder="col-form-label-lg" >
                                 <option  data-ng-repeat="passenger in passengers" value={{passenger.id}} id={{passenger.id}}>{{passenger.firstName}} {{passenger.lastName}}: {{passenger.email}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-12 ">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button type="submit" class="btn btn-primary" ng-click="getInput()">Confirm</button>
                     </div>
                 </form>
             </div>
@@ -100,6 +91,16 @@
 
 </main>
 <script type="text/javascript">
+    function check_cookie_name(name)
+    {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+            return match;
+        }
+        else{
+            console.log('wrong name');
+        }
+    }
     $( document ).ready(function() {
     /*    $('#datepicker').datepicker();*/
 
@@ -110,21 +111,62 @@
         $scope.firstname = "";
         $scope.lastname = "";
         $scope.passemail = "";
+        $scope.FromPlace = "";
+        $scope.ToPlace = "";
+
+
         $http({
             url: '/api/v1/accounts/1/passenger',
             method: "GET",
         }).then(function (response){
             $scope.passengers = response.data
         });
-        $scope.createPass = function() {
+        $scope.getInput = function() {
+            var passengers = $('#colFormLabelSm').val().join("&");
+            console.log(passengers);
             $http({
-                url: '/api/v1/accounts/1/passenger',
+                url: '/api/v1/accounts/trips',
                 method: "POST",
-                data:{firstName:$scope.firstname,lastName:$scope.lastname,email:$scope.passemail},
+                data:{FromPlace:$scope.FromPlace,ToPlace:$scope.ToPlace,DepartureDate:$('#DepartureDate').val(),ReturnDate:$('#ReturnDate').val(),passengerId:passengers},
+            }).then(function (response){
+                            console.log($scope.FromPlace+" "+$scope.ToPlace+" "+$scope.DepartureDate+" "+$scope.ReturnDate+" ")
+                        },function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
+        };
+        $scope.createTrip = function() {
+            $http({
+                url: '/api/v1/accounts/Trips',
+                method: "POST",
+                data:{FromPlace:$scope.FromPlace,ToPlace:$scope.ToPlace,DepartureDate:$scope.DepartureDate,ReturnDate:$scope.ReturnDate},
 
         }).then(function (response){
                 $http({
                     url: '/api/v1/accounts/1/passenger',
+                    method: "GET",
+                }).then(function (response){
+                    $scope.passengers = response.data
+                });
+            },function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
+
+        };
+        $scope.createPass = function() {
+            var accountId = check_cookie_name('accountId');
+            if(!accountId){
+                return;
+            }
+            $http({
+                url: '/api/v1/accounts/'+accountId+'/passenger',
+                method: "POST",
+                data:{firstName:$scope.firstname,lastName:$scope.lastname,email:$scope.passemail},
+
+            }).then(function (response){
+                $http({
+                    url: '/api/v1/accounts/'+accountId+'/passenger',
                     method: "GET",
                 }).then(function (response){
                     $scope.passengers = response.data

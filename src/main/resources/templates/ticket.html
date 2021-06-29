@@ -7,20 +7,31 @@
 <body class="d-flex flex-column h-100">
 <header th:insert="base :: header" ></header>
 <!-- Begin page content -->
-<div class="container " data-ng-controller="SimpleController">
+<div class="container overflow-auto" data-ng-controller="SimpleController">
+  <div class="g-3" data-ng-repeat="trip in travelHistory.trips">
+    <h3>{{trip.departureLocation}} to {{trip.arrivalLocation}} </h3>
   <div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col-10 col-xl-4 col-lg-6 col-md-10 col-sm-10  col-xs-10" data-ng-repeat="ticket in tickets">
+    <div class="col-10 col-xl-4 col-lg-6 col-md-10 col-sm-10  col-xs-10" data-ng-repeat="passenger in travelHistory.passengers[$index]">
       <div class="card g-4" >
         <div class="card-body">
-          <h5 class="card-title">Anthony Zhao</h5>
-          <p class="card-text">{{ticket.departureLocation}} To {{ticket.arrivalLocation}}</p>
-          <p class="card-text">Departure Date: {{ticket.travelDate}}</p>
-          <p class="card-text">Return Date: {{ticket.endDate}}</p>
-          <p class="card-text">Price: ${{ticket.totalPrice}}</p>
-          <a href="#" class="btn btn-danger">Cancel</a>
+          <h5 class="card-title">{{passenger.firstName}}</h5>
+          <p class="card-text">{{trip.departureLocation}} To {{trip.arrivalLocation}}</p>
+          <p class="card-text">Departure Date: {{trip.travelDate}}</p>
+          <p class="card-text">Return Date: {{trip.endDate}}</p>
+          <p class="card-text">Price: 200</p>
+          <a ng-click="deleteTicket(passenger.id,trip.id)" class="btn btn-danger">Cancel</a>
         </div>
       </div>
     </div>
+  </div>
+    <p></p>
+    <div class="row g-3">
+      <div class="col-9 g-3">
+      <input type="text" class="form-control" id="comment_{{trip.id}}" placeholder="{{trip.comment}}" >
+      </div>
+      <button type="button" class="btn btn-primary col-2 g-3" ng-click="UpdateComment(trip.id)">comment</button>
+    </div>
+    <p></p>
   </div>
 </div>
 </main>
@@ -32,9 +43,47 @@
       url: '/api/v1/accounts/tickets',
       method: "GET",
     }).then(function (response){
-      $scope.tickets = response.data
-
+      $scope.travelHistory = response.data
+      $scope.travelHistory.passengers.forEach(e =>console.log(e.forEach(f => console.log(f.firstName))));
     });
+    $scope.deleteTicket = function(passengerId,tripId) {
+      $http({
+        url: '/api/v1/accounts/tickets/'+passengerId+'/'+tripId,
+        method: "DELETE",
+
+      }).then(function (response){
+        $http({
+          url: '/api/v1/accounts/tickets',
+          method: "GET",
+        }).then(function (response){
+          $scope.passengers = response.data
+        });
+        location.reload();
+      },function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
+
+    };
+    $scope.UpdateComment = function(tripId) {
+      $http({
+        url: '/api/v1/trip/'+tripId+'/'+$('#comment_'+tripId).val(),
+        method: "PUT",
+
+      }).then(function (response){
+        $http({
+          url: '/api/v1/accounts/tickets',
+          method: "GET",
+        }).then(function (response){
+          $scope.passengers = response.data
+        });
+        location.reload();
+      },function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+      });
+
+    };
   });
 </script>
 <script>
